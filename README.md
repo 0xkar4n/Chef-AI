@@ -1,36 +1,66 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Chef AI - Smart Recipe Generator
 
-## Getting Started
+## Overview
+Chef AI is an intelligent recipe generator that helps users create delicious meals using the ingredients they have. Simply enter the available ingredients, and Chef AI will suggest the top six recipes with detailed steps. Users can tweak any recipe as per their preference for a personalized cooking experience.
 
-First, run the development server:
+## Features
+- **AI-Powered Recipe Generation**: Uses Google Gemini AI to generate recipes based on user-inputted ingredients.
+- **Customizable Recipes**: Modify any suggested recipe to suit your taste.
+- **User Authentication**: Secure authentication with NextAuth.
+- **Modern UI/UX**: Built with Tailwind CSS, ShadCN components, and Framer Motion for a seamless and engaging experience.
+- **Database Management**: Prisma ORM for efficient database operations.
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+## Tech Stack
+- **Frontend**: Next.js, Tailwind CSS, ShadCN UI, Framer Motion
+- **Backend**: Next.js API routes, Prisma ORM
+- **AI Integration**: Google Gemini AI
+- **Authentication**: NextAuth
+- **Database**: PostgreSQL (or any compatible Prisma-supported database)
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Installation
+### Prerequisites
+- Node.js (v18+ recommended)
+- PostgreSQL (or any Prisma-compatible database)
+- Google Gemini AI API Key
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+### Setup
+1. Clone the repository:
+   ```sh
+   git clone https://github.com/your-username/chef-ai.git
+   cd chef-ai
+   ```
+2. Install dependencies:
+   ```sh
+   npm install
+   ```
+3. Configure environment variables:
+   Create a `.env` file in the root directory and add the following:
+   ```env
+   DATABASE_URL=your-database-url
+   NEXTAUTH_SECRET=your-nextauth-secret
+   GEMINI_API_KEY=your-gemini-api-key
+   ```
+4. Set up the database:
+   ```sh
+   npx prisma migrate dev --name init
+   ```
+5. Start the development server:
+   ```sh
+   npm run dev
+   ```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## Usage
+1. Log in using NextAuth authentication.
+2. Enter available ingredients in the search bar.
+3. Chef AI will generate six recipe suggestions.
+4. Click on any recipe to view detailed steps.
+5. Modify ingredients or steps if needed.
+6. Enjoy cooking!
 
-## Learn More
+## Future Enhancements
+- **Save Favorite Recipes**: Users can save and revisit recipes.
+- **Recipe Ratings & Reviews**: Let users rate and review recipes.
+- **Shopping List Generator**: Suggest missing ingredients for a selected recipe.
+- **Multilingual Support**: Support for multiple languages.
 
-To learn more about Next.js, take a look at the following resources:
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
