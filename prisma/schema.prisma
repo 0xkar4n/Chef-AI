@@ -1,0 +1,76 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id        Int       @id @default(autoincrement())
+  name      String?
+  email     String    @unique
+  password  String
+  recipes   Recipes[]
+  prompts   Prompt[]
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+}
+
+model Prompt {
+  id        Int      @id @default(autoincrement())
+  text      String
+  userId    Int
+  user      User     @relation(fields: [userId], references: [id])
+  recipeId  Int? // Links the prompt to an individual recipe
+  recipe    Recipes? @relation(fields: [recipeId], references: [id])
+  createdAt DateTime @default(now()) // When the prompt was created
+}
+
+
+model Recipes {
+  id          Int      @id @default(autoincrement()) // Primary key for the group of recipes
+  userId      Int // User who requested the recipes
+  user        User     @relation(fields: [userId], references: [id])
+  prompt      String // Prompt or request text for generating recipes
+  generatedAt DateTime @default(now()) // When the recipes were generated
+  recipes     Recipe[] // Relationship to the individual recipes
+  prompts     Prompt[]
+}
+
+model Recipe {
+  id           Int            @id @default(autoincrement()) // Primary key for each individual recipe
+  recipesId    Int?  // Foreign key to the parent Recipes model
+  recipes      Recipes?        @relation(fields: [recipesId], references: [id])
+  title        String         @default("Untitled Recipe")
+  prepTime     String? // Preparation time
+  cookTime     String? // Cooking time
+  ingredients  Json? // List of ingredients
+  instructions Json? // Cooking instructions
+  cuisine      String? // Cuisine type
+  conversation Conversation[] // Conversation related to this recipe
+  createdAt    DateTime       @default(now()) // When the recipe was created
+}
+
+model Conversation {
+  id        Int      @id @default(autoincrement())
+  recipeId  Int // Foreign key to the related recipe
+  recipe    Recipe   @relation(fields: [recipeId], references: [id])
+  message   String // User's message or system-generated response
+  sender    String // Indicates who sent the message (e.g., 'user' or 'system')
+  createdAt DateTime @default(now()) // When the conversation was created
+}
+
+model ApiResponse {
+  id        Int      @id @default(autoincrement())
+  promptId  Int
+  response  Json
+  createdAt DateTime @default(now())
+}
