@@ -56,7 +56,8 @@ model Recipe {
   instructions Json? // Cooking instructions
   cuisine      String? // Cuisine type
   conversation Conversation[] // Conversation related to this recipe
-  createdAt    DateTime       @default(now()) // When the recipe was created
+  createdAt    DateTime  @default(now())
+  chats        Chat[]
 }
 
 model Conversation {
@@ -73,4 +74,15 @@ model ApiResponse {
   promptId  Int
   response  Json
   createdAt DateTime @default(now())
+}
+
+model Chat {
+  id        Int      @id @default(autoincrement())
+  recipeId  Int
+  message   String
+  isUser    Boolean  @default(true)
+  createdAt DateTime @default(now())
+  recipe    Recipe   @relation(fields: [recipeId], references: [id])
+
+  @@index([recipeId])
 }
