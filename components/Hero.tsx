@@ -56,7 +56,13 @@ export function Hero() {
   }, [startAnimation, handleVisibilityChange]);
 
   const draw = useCallback(() => {
-    newDataRef.current = drawTextOnCanvas(ingredients, inputRef, canvasRef);
+    if (inputRef.current && canvasRef.current) {
+      newDataRef.current = drawTextOnCanvas(
+        ingredients, 
+        inputRef as React.RefObject<HTMLInputElement>, 
+        canvasRef as React.RefObject<HTMLCanvasElement>
+      );
+    }
   }, [ingredients]);
 
   useEffect(() => {

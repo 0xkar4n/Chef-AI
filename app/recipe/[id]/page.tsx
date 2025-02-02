@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react'
 import { useParams } from 'next/navigation'
 import { motion } from 'framer-motion'
 import { RecipeCard } from '@/components/RecipeCard'
-import { RecipeDetails } from '@/components/RecipeDetails'
+import { RecipeDetails, RecipeDetailsProps } from '@/components/RecipeDetails'
 import { LoadingAnimation } from '@/components/LoadingAnimation'
 import { Drawer, DrawerContent, DrawerHeader, DrawerTitle, DrawerDescription } from '@/components/ui/drawer'
 import axios from 'axios'
@@ -47,7 +47,6 @@ export default function RecipePage() {
   }, [id])
 
   const handleSendMessage = (message: string) => {
-    // Here you would typically send the message to your API
     console.log('Sending message:', message)
   }
 
@@ -111,7 +110,7 @@ export default function RecipePage() {
           </DrawerHeader>
           {selectedRecipe && recipeData && (
             <RecipeDetails
-              recipe={recipeData.find(selectRecipe=> selectRecipe.title == selectedRecipe)}
+              recipe={recipeData.find((recipe) => recipe.title === selectedRecipe) || recipeData[0]}
               recipeName={selectedRecipe}
               onSendMessage={handleSendMessage}
             />

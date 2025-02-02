@@ -17,12 +17,13 @@ interface Recipe {
   cuisine: string
 }
 
-interface RecipeDetailsProps {
+export interface RecipeDetailsProps {
   recipe: Recipe
   recipeName: string
+  onSendMessage: (message: string) => void
 }
 
-export function RecipeDetails({ recipe, recipeName }: RecipeDetailsProps) {
+export function RecipeDetails({ recipe, recipeName, onSendMessage }: RecipeDetailsProps) {
   if (!recipe) {
     return <div>No recipe found for {recipeName}.</div>
   }
